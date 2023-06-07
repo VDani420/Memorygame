@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="cards">
+        <div>
+          <div class="row"></div>
+          <div class="row"></div>
+        </div>
+      </div>
+      <button onclick="NewGame()" type="button">New Game</button>
+    </div>
+
+    <script>
+      let clicked;
+      let checkemoji;
+      const array = ["🍒", "🥑", "🍇", "🍉", "🍊", "🥭", "🍋", "🍅"];
+      const darray = [...array, ...array];
+      darray.sort(() => Math.random() - 0.5);
+      console.log(darray);
+      let str = "";
+      for (let i = 0; i < darray.length; i++) {
+        str += `<div onclick="flipCard(this)" class="card col-md-2 col-xs-3 m-3 display0">${darray[i]}</div>`;
+      }
+      document.querySelector(".row").innerHTML = str;
+
+      function UnFlipCards(obj) {
+        setTimeout(() => {
+          console.log(obj);
+          obj.classList.add("display0");
+          clicked.classList.add("display0");
+          obj.classList.remove("display1");
+          clicked.classList.remove("display1");
+        }, "1000");
+      }
+      function checkMatch(obj) {
+        if (checkemoji == undefined) {
+          checkemoji = obj.innerText;
+          clicked = obj;
+        } else {
+          if (checkemoji == obj.innerText) {
+          } else {
+            UnFlipCards(obj);
+          }
+          checkemoji = undefined;
+        }
+      }
+      function flipCard(obj) {
+        obj.classList.remove("display0");
+        obj.classList.add("display1");
+
+        checkMatch(obj);
+      }
+      function NewGame() {
+        let clicked = null;
+        let checkemoji = undefined;
+        document.querySelectorAll(".row").innerHTML = "";
+        darray.sort(() => Math.random() - 0.5);
+        console.log(darray);
+        let str = "";
+        for (let i = 0; i < darray.length; i++) {
+          str += `<div onclick="flipCard(this)" class="card col-md-2 col-xs-3 m-3 display0">${darray[i]}</div>`;
+        }
+        document.querySelector(".row").innerHTML = str;
+      }
+    </script>
+  </body>
+</html>
